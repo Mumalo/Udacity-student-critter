@@ -84,6 +84,7 @@ public class PetServiceImpl implements PetService {
         if (customerOptional.isPresent()) {
             Customer customer = customerOptional.get();
             pets = customer.getPets();
+            System.out.println("Customer has pets " + pets);
         } else {
             pets = new ArrayList<>();
         }

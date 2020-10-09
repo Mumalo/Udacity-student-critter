@@ -32,7 +32,6 @@ public class PetController {
     @PostMapping
     public PetDTO savePet(@RequestBody PetDTO petDTO) {
 
-        //much of this work should be done in the service
         String petName = petDTO.getName();
         PetType petType = petDTO.getType();
         Long ownerId = petDTO.getOwnerId();
@@ -42,7 +41,7 @@ public class PetController {
 
         Customer customer = customerService.findById(ownerId);
 
-
+        //much of this work should be done in the service
         Pet pet = new Pet();
         pet.setName(petName);
         pet.setPetType(petType);

@@ -95,4 +95,16 @@ public class Pet implements Serializable {
     public void setOwner(Customer owner) {
         this.owner = owner;
     }
+
+    @Override
+    public String toString() {
+        return "Pet{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", petType=" + petType +
+                ", notes='" + notes + '\'' +
+                ", birthDate=" + birthDate +
+                ", owner=" + owner +
+                '}';
+    }
 }

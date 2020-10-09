@@ -100,6 +100,18 @@ public class CritterFunctionalTest {
         PetDTO newPet2 = petController.savePet(petDTO);
 
         List<PetDTO> pets = petController.getPetsByOwner(newCustomer.getId());
+        /**
+         * This fails because you are adding a single pet to the collection more than once
+         * has pets [Pet{id=1, name='TestPet', petType=CAT, notes='null', birthDate=null, owner=com.udacity.jdnd.course3.critter.model.Customer@5604b85},
+         * Pet{id=1, name='TestPet', petType=CAT, notes='null', birthDate=null, owner=com.udacity.jdnd.course3.critter.model.Customer@5604b85},
+         * Pet{id=1, name='TestPet', petType=CAT, notes='null', birthDate=null, owner=com.udacity.jdnd.course3.critter.model.Customer@5604b85},
+         * Pet{id=1, name='TestPet', petType=CAT, notes='null', birthDate=null, owner=com.udacity.jdnd.course3.critter.model.Customer@5604b85}
+         * ]
+         * Please check why this pet is added four times into the customers collection
+         * For scenarios like this, you may want to use unique Collections like Set to avoid this
+         * But please audit your code and check why this is occurring
+         *
+         */
         Assertions.assertEquals(pets.size(), 2);
         Assertions.assertEquals(pets.get(0).getOwnerId(), newCustomer.getId());
         Assertions.assertEquals(pets.get(0).getId(), newPet.getId());
@@ -169,6 +181,12 @@ public class CritterFunctionalTest {
         Assertions.assertEquals(eIds2, eIds2expected);
     }
 
+    /**
+     * As you can see, those test docent fail
+     * The reason for its previous failure was because you were using List to store employeeSkills
+     * in the Schedule domain while Set was being used in the DTO. So when you call copyProperties on bean utils,
+     * this particular field is skipped. Please check the getScheduleFromDTO for more comments
+     */
     @Test
     public void testSchedulePetsForServiceWithEmployee() {
         EmployeeDTO employeeTemp = createEmployeeDTO();
