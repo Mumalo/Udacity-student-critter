@@ -54,11 +54,8 @@ public class ScheduleController {
 
         schedule.setEmployees(employees);
         schedule.setPets(pets);
-//        schedule.setActivities(scheduleDTO.getActivities());
-
-
         Schedule savedSchedule = scheduleService.saveSchedule(schedule);
-        System.out.println("Saved schedule is " + schedule);
+        System.out.println("Saved schedule is " + schedule.getActivities());
 
         return getScheduleDTO(savedSchedule);
     }
@@ -123,6 +120,13 @@ public class ScheduleController {
     }
 
     private Schedule getScheduleFromDTO(ScheduleDTO scheduleDTO) {
+        /**
+         * usually, modepmappers traverse through object properties and match those that are the same.
+         * ie same name and types. The issue why your test was failing is that in your schedule class, employee skills
+         * was a list while in your dto, its a set. So copyProperties skips activities property in both beans as they
+         * have the same name but are not represented by the same data structure. All I did was to change the List collection
+         * in the Schedule entity to Set and your tests passed. Please have this in mind next time in your projects.
+         */
         Schedule schedule = new Schedule();
 
         BeanUtils.copyProperties(scheduleDTO, schedule);
